@@ -5,6 +5,7 @@ import { Card, ListItem } from "react-native-elements";
 import { connect } from "react-redux";
 //base url constant, contains IP address of computer
 import { baseUrl } from "../shared/baseUrl";
+import Loading from './LoadingComponent';
 
 
 /* mapStateToProps function recieves the state as a prop and returns 
@@ -38,30 +39,43 @@ class About extends Component {
   };
 
   render() {
-    const renderPartner = ({ item }) => {
-      return (
-        <ListItem
-          title={item.name}
-          subtitle={item.description}
-          onPress={() => navigate("CampsiteInfo", { partnerId: item.id })}
-          leftAvatar={{ source: { uri: baseUrl + item.image } }}
-        />
-      );
+    const renderPartner = ({item}) => {
+        return (
+            <ListItem
+                title={item.name}
+                subtitle={item.description}
+                leftAvatar={{source: {uri: baseUrl + item.image}}}
+            />
+        );
     };
 
-    return (
-      <ScrollView>
-        <Mission />
-        <Card title="Community Partners" wrapperStyle={{ margin: 20 }}>
-          <FlatList
-            data={this.props.partners.partners}
-            renderItem={renderPartner}
-            keyExtractor={(item) => item.id.toString()}
-          />
-        </Card>
-      </ScrollView>
-    );
-  }
+    if (this.props.partners.isLoading) {
+        return (
+            <ScrollView>
+                <Mission />
+                <Card
+                    title='Community Partners'>
+                    <Loading />
+                </Card>
+            </ScrollView>
+        );
+    }
+    if (this.props.partners.errMess) {
+        return (
+            <ScrollView>
+                <Mission />
+                <Card
+                    title='Community Partners'>
+                    <Text>{this.props.partners.errMess}</Text>
+                </Card>
+            </ScrollView>
+        );
+    }
+      return (
+        <ScrollView/>
+      );
+  };
+
 }
 
 export default connect(mapStateToProps)(About);
