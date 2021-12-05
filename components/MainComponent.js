@@ -164,6 +164,32 @@ const ContactNavigator = createStackNavigator(
   }
 );
 
+
+/*const CampsiteInfoNavigator = createStackNavigator(
+  {
+    Contact: { screen: CampsiteInfoNavigator },
+  },
+  {
+    defaultNavigationOptions: ({ navigation }) => ({
+      headerStyle: {
+        backgroundColor: "#5637DD",
+      },
+      headerTintColor: "#fff",
+      headerTitleStyle: {
+        color: "#fff",
+      },
+      headerLeft: (
+        <Icon
+          name="info-circle"
+          type="font-awesome"
+          iconStyle={styles.stackIcon}
+          onPress={() => navigation.toggleDrawer()}
+        />
+      ),
+    }),
+  }
+);*/
+
 const CustomDrawerContentComponent = (props) => (
   <ScrollView>
     <SafeAreaView
@@ -245,8 +271,23 @@ const MainNavigator = createDrawerNavigator(
           />
         )
       }
-    }
+    },
+    /*CampsiteInfo: {
+      screen: CampsiteInfoNavigator,
+      navigationOptions: {
+        drawerLabel: "Campsite Information",
+        drawerIcon: ({ tintColor }) => (
+          <Icon
+            name="info"
+            type="font-awesome"
+            size={24}
+            color={tintColor}
+          />
+        )
+      }
+    },*/  
   },
+  
   {
     drawerBackgroundColor: "#CEC8FF",
     contentComponent: CustomDrawerContentComponent,
