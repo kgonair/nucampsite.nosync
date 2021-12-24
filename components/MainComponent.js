@@ -4,6 +4,7 @@ import About from "./AboutComponent";
 import Contact from "./ContactComponent";
 import Directory from "./DirectoryComponent";
 import CampsiteInfo from "./CampsiteInfoComponent";
+import Favorites from "./FavoritesComponent";
 import Constants from "expo-constants";
 import {
   View,
@@ -34,28 +35,54 @@ const mapDispatchToProps = {
   fetchPartners,
 };
 
+const FavoritesNavigator = createStackNavigator(
+  {
+    Favorites: { screen: Favorites },
+  },
+  {
+    defaultNavigationOptions: ({ navigation }) => ({
+      headerStyle: {
+        backgroundColor: "#5637DD",
+      },
+      headerTintColor: "#fff",
+      headerTitleStyle: {
+        color: "#fff",
+      },
+      headerLeft: (
+        <Icon
+          name="heart"
+          type="font-awesome"
+          iconStyle={styles.stackIcon}
+          onPress={() => navigation.toggleDrawer()}
+        />
+      ),
+    }),
+  }
+);
 
 const ReservationNavigator = createStackNavigator(
-    {
-        Reservation: { screen: Reservation }
-    },
-    {
-        defaultNavigationOptions: ({navigation}) => ({
-            headerStyle: {
-                backgroundColor: '#5637DD'
-            },
-            headerTintColor: '#fff',
-            headerTitleStyle: {
-                color: '#fff'
-            },
-            headerLeft: <Icon
-                name='tree'
-                type='font-awesome'
-                iconStyle={styles.stackIcon}
-                onPress={() => navigation.toggleDrawer()}
-            />
-        })
-    }
+  {
+    Reservation: { screen: Reservation },
+  },
+  {
+    defaultNavigationOptions: ({ navigation }) => ({
+      headerStyle: {
+        backgroundColor: "#5637DD",
+      },
+      headerTintColor: "#fff",
+      headerTitleStyle: {
+        color: "#fff",
+      },
+      headerLeft: (
+        <Icon
+          name="tree"
+          type="font-awesome"
+          iconStyle={styles.stackIcon}
+          onPress={() => navigation.toggleDrawer()}
+        />
+      ),
+    }),
+  }
 );
 
 const DirectoryNavigator = createStackNavigator(
@@ -164,7 +191,6 @@ const ContactNavigator = createStackNavigator(
   }
 );
 
-
 /*const CampsiteInfoNavigator = createStackNavigator(
   {
     Contact: { screen: CampsiteInfoNavigator },
@@ -219,30 +245,25 @@ const MainNavigator = createDrawerNavigator(
       navigationOptions: {
         drawerIcon: ({ tintColor }) => (
           <Icon name="home" type="font-awesome" size={24} color={tintColor} />
-        )
-      }
+        ),
+      },
     },
     Directory: {
       screen: DirectoryNavigator,
       navigationOptions: {
         drawerIcon: ({ tintColor }) => (
           <Icon name="list" type="font-awesome" size={24} color={tintColor} />
-        )
-      }
+        ),
+      },
     },
     Reservation: {
-        screen: ReservationNavigator,
-        navigationOptions: {
-            drawerLabel: 'Reserve Campsite',
-            drawerIcon: ({tintColor}) => (
-                <Icon
-                    name='tree'
-                    type='font-awesome'
-                    size={24}
-                    color={tintColor}
-                />
-            )
-        }
+      screen: ReservationNavigator,
+      navigationOptions: {
+        drawerLabel: "Reserve Campsite",
+        drawerIcon: ({ tintColor }) => (
+          <Icon name="tree" type="font-awesome" size={24} color={tintColor} />
+        ),
+      },
     },
     About: {
       screen: AboutNavigator,
@@ -255,8 +276,8 @@ const MainNavigator = createDrawerNavigator(
             size={24}
             color={tintColor}
           />
-        )
-      }
+        ),
+      },
     },
     Contact: {
       screen: ContactNavigator,
@@ -269,25 +290,20 @@ const MainNavigator = createDrawerNavigator(
             size={24}
             color={tintColor}
           />
-        )
-      }
+        ),
+      },
     },
-    /*CampsiteInfo: {
-      screen: CampsiteInfoNavigator,
+    Favorites: {
+      screen: FavoritesNavigator,
       navigationOptions: {
-        drawerLabel: "Campsite Information",
+        drawerLabel: "My Favorites",
         drawerIcon: ({ tintColor }) => (
-          <Icon
-            name="info"
-            type="font-awesome"
-            size={24}
-            color={tintColor}
-          />
-        )
-      }
-    },*/  
+          <Icon name="heart" type="font-awesome" size={24} color={tintColor} />
+        ),
+      },
+    },
   },
-  
+
   {
     drawerBackgroundColor: "#CEC8FF",
     contentComponent: CustomDrawerContentComponent,
