@@ -15,6 +15,7 @@ import { COMMENTS } from "../shared/comments";
 import { connect } from "react-redux";
 import { baseUrl } from "../shared/baseUrl";
 import { postFavorite, postComment } from "../redux/ActionCreators";
+import * as Animatable from 'react-native-animatable';
 //import { Rating } from "react-native-ratings";
 
 const mapStateToProps = (state) => {
@@ -31,43 +32,14 @@ const mapDispatchToProps = {
   postComment: (campsiteId,rating,author,text) => postComment(campsiteId,rating,author,text)
 };
 
-function RenderComments({ comments }) {
 
-  const renderCommentItem = ({ item }) => {
-    return (
-      <View style={{ margin: 10 }}>
-        <Text style={{ fontSize: 14 }}>{item.text}</Text>
-        <Rating
-              showRating
-              startingValue={item.rating}
-              style={{ alignItems:'flex-start', paddingVertical: '5%' }}
-              imageSize={10}
-              readonly
-              onFinishRating={(rating) => this.setState({ rating: rating })}
-            />
-        <Text
-          style={{ fontSize: 12 }}
-        >{`-- ${item.author}, ${item.date}`}</Text>
-      </View>
-    );
-  };
-
-  return (
-    <Card title="Comments">
-      <FlatList
-        data={comments}
-        renderItem={renderCommentItem}
-        keyExtractor={(item) => item.id.toString()}
-      />
-    </Card>
-  );
-}
 
 function RenderCampsite(props) {
   const { campsite } = props;
 
   if (campsite) {
     return (
+      <Animatable.View animation='fadeInDown' duration={2000} delay={1000}>
       <Card
         featuredTitle={campsite.name}
         image={{ uri: baseUrl + campsite.image }}
@@ -97,9 +69,45 @@ function RenderCampsite(props) {
           />
         </View>
       </Card>
+      </Animatable.View>
     );
   }
   return <View />;
+}
+
+
+function RenderComments({ comments }) {
+
+  const renderCommentItem = ({ item }) => {
+    return (
+      <View style={{ margin: 10 }}>
+        <Text style={{ fontSize: 14 }}>{item.text}</Text>
+        <Rating
+              showRating
+              startingValue={item.rating}
+              style={{ alignItems:'flex-start', paddingVertical: '5%' }}
+              imageSize={10}
+              readonly
+              onFinishRating={(rating) => this.setState({ rating: rating })}
+            />
+        <Text
+          style={{ fontSize: 12 }}
+        >{`-- ${item.author}, ${item.date}`}</Text>
+      </View>
+    );
+  };
+
+  return (
+    <Animatable.View animation='fadeInUp' duration={2000} delay={1000}>
+    <Card title="Comments">
+      <FlatList
+        data={comments}
+        renderItem={renderCommentItem}
+        keyExtractor={(item) => item.id.toString()}
+      />
+    </Card>
+    </Animatable.View>
+  );
 }
 
 class CampsiteInfo extends Component {
